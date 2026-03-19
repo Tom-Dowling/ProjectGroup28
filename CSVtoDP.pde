@@ -171,8 +171,8 @@ void setup() {
   System.out.println(count);
 }
 
-final int ScreenX = 900;
-final int ScreenY = 900;
+final int ScreenX = 1400;
+final int ScreenY = 800;
 float size = 16;
 
 void drawFlights(ArrayList<DataPoint> flightsToDisplay){
@@ -199,7 +199,6 @@ void drawFlights(ArrayList<DataPoint> flightsToDisplay){
     y += 25;
     
   }
-
  
 
 }
@@ -208,7 +207,7 @@ void drawFlights(ArrayList<DataPoint> flightsToDisplay){
  public ArrayList<DataPoint> getFlightsToDisplay(int page) {
    ArrayList<DataPoint> flightsToDisplay = new ArrayList<DataPoint>();
    
-   int amountOfEntriesOnPage = 20;
+   int amountOfEntriesOnPage = 10;
    
    DataPoint holder = new DataPoint();
    
@@ -224,10 +223,33 @@ void drawFlights(ArrayList<DataPoint> flightsToDisplay){
 
 
 void settings(){
-  size(ScreenX, ScreenY);
+  size(ScreenX, ScreenY,P2D);
 }
 
 void draw() {
+
+  
+  background(255);
+  displayFilters();
+  float topOffset = 300;        // grid starts 100 down
+  float colW = width / 18.0;   // width of each column
+  float colH = (height - topOffset) / 10.0;  // height of each row
+
+  stroke(2);
+  strokeWeight(1);
+
+  // Vertical lines (18 lines for 17 spaces)
+  for (int i = 0; i <= 18; i++) {
+    float x = i * colW;
+    line(x, topOffset, x, height);
+  }
+
+  // Horizontal lines (11 lines for 10 spaces)
+  for (int j = 0; j <= 10; j++) {
+    float y = topOffset + j * colH;
+    line(0, y, width, y);
+  }
+  
   ArrayList<DataPoint> flightsToDisplay = getFlightsToDisplay(1);
   drawFlights(flightsToDisplay);
   
