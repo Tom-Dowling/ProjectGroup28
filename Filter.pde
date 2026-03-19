@@ -187,7 +187,7 @@ void drawFlights(){
    
    
     
-    if (filterSelected == off){
+    if (filterSelected == false){
  
     
   for (DataPoint f : dataPoints) {
@@ -208,7 +208,7 @@ void drawFlights(){
   }
   }
     
-  if (filterSelected == on){
+  if (filterSelected == true){
   for (DataPoint f : jfkFlights) { 
      
     String row = f.FL_DATE + " | " + f.MKT_CARRIER + " | " + f.MKT_CARRIER_FL_NUM
