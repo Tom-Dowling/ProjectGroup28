@@ -1,0 +1,53 @@
+
+////////////// Main Outline of programme, including all major classes and suggested varibake names (subject to change) -Ben //////////////////////////
+
+class Flight {  // stores individual flight data
+  String origin;
+  String destination;
+  int distance;
+  int date;
+  String airline;
+  int depTime;
+  int arrTime;
+  int schedArrivTime;
+  boolean isCancelled;
+  boolean isDiverted;
+  }
+ 
+ 
+ class DataLoader{             // reading csv file
+ ArrayList<Flight> flights;     // all flight objects         
+ String[]rawData;            // temp storage of lines
+ int rowCount;              //track how many records
+ 
+ }
+ 
+ 
+class Filtering {             // filtering flights
+  ArrayList<Flight> currentResults;    //store the results of the query
+  String activeAirport;       // store the currently selected airport
+  int startDate, endDate;   // store selected date range
+}
+
+ 
+class Graphing {               //visual representation of data
+ float x, y, w, h;
+ color barcolor;
+ int maxVal;           // max value for the graphs like furthest distance/longest delay etc
+}
+
+
+class Screen {            //Screen class
+ ArrayList <Widget> screenWidgets= new ArrayList<Widget>();// diff buttons on sreens
+ colour bgcolour;
+}
+
+class Widget {            // Button/Widget class
+  int x, y, w, h;
+  String label;
+
+  Widget(int x, int y, int w, int h, String label) {
+    this.x = x; this.y = y; this.w = w; this.h = h;
+    this.label = label;
+  }
+}
