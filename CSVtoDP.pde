@@ -47,6 +47,30 @@ String DEST_STATE_ABR,int DEST_WAC,int CRS_DEP_TIME,int DEP_TIME,int CRS_ARR_TIM
  
 }
 
+DataPoint()
+{
+  this.FL_DATE = null;
+  this.MKT_CARRIER = null;
+  this.MKT_CARRIER_FL_NUM = 0;
+  this.ORIGIN = null;
+  this.ORIGIN_CITY_NAME = null;
+  this.ORIGIN_STATE_ABR = null;
+  this.ORIGIN_WAC = 0;
+  this.DEST = null;
+  this.DEST_CITY_NAME = null;
+  this.DEST_STATE_ABR = null;
+  this.DEST_WAC = 0;
+  this.CRS_DEP_TIME = 0;
+  this.DEP_TIME = 0;
+  this.CRS_ARR_TIME = 0;
+  this.ARR_TIME = 0;
+  this.CANCELLED = true;
+  this.DIVERTED = true;
+  this.DISTANCE = 0;
+ 
+}
+
+
 
 }
 ArrayList<DataPoint> dataPoints;
@@ -151,10 +175,10 @@ final int ScreenX = 900;
 final int ScreenY = 900;
 float size = 16;
 
-void drawFlights(){
+void drawFlights(ArrayList<DataPoint> flightsToDisplay){
   int y = 120;
 
-  for (DataPoint f : dataPoints) {
+  for (DataPoint f : flightsToDisplay) {
      
     String row = f.FL_DATE + " | " + f.MKT_CARRIER + " | " + f.MKT_CARRIER_FL_NUM
     + f.ORIGIN + " | " + f.ORIGIN_CITY_NAME + " | " + f.ORIGIN_STATE_ABR + " | " +
@@ -180,10 +204,32 @@ void drawFlights(){
 
 }
 
+
+ public ArrayList<DataPoint> getFlightsToDisplay(int page) {
+   ArrayList<DataPoint> flightsToDisplay = new ArrayList<DataPoint>();
+   
+   int amountOfEntriesOnPage = 20;
+   
+   DataPoint holder = new DataPoint();
+   
+   for (int i = 0; i < amountOfEntriesOnPage; i++) {
+     holder = dataPoints.get(page*amountOfEntriesOnPage + i);
+     
+     flightsToDisplay.add(holder);
+   }
+   
+   return flightsToDisplay;
+ }
+
+
+
 void settings(){
   size(ScreenX, ScreenY);
 }
 
 void draw() {
-  drawFlights();
+  ArrayList<DataPoint> flightsToDisplay = getFlightsToDisplay(1);
+  drawFlights(flightsToDisplay);
+  
+  
 }
