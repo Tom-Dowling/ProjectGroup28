@@ -186,8 +186,8 @@ void drawFlights(){
    int y = 120;
    
    
-   if (filterSelected == off){
     
+    if (filterSelected == off){
  
     
   for (DataPoint f : dataPoints) {
@@ -205,7 +205,8 @@ void drawFlights(){
        textSize(size);
       
     }
-    }
+  }
+  }
     
   if (filterSelected == on){
   for (DataPoint f : jfkFlights) { 
@@ -229,11 +230,12 @@ void drawFlights(){
     y += 25;
     
   }
-
-
- 
- 
   }
+
+
+ 
+ 
+
 }
 
 void settings(){
