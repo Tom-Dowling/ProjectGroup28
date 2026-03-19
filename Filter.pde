@@ -186,9 +186,9 @@ void drawFlights(){
    int y = 120;
    
    
-    /*
+   if (filterSelected == off){
     
-  Old code for unfiltered flights.   
+ 
     
   for (DataPoint f : dataPoints) {
      
@@ -205,8 +205,9 @@ void drawFlights(){
        textSize(size);
       
     }
-    */
-  
+    }
+    
+  if (filterSelected == on){
   for (DataPoint f : jfkFlights) { 
      
     String row = f.FL_DATE + " | " + f.MKT_CARRIER + " | " + f.MKT_CARRIER_FL_NUM
@@ -232,7 +233,7 @@ void drawFlights(){
 
  
  
-
+  }
 }
 
 void settings(){
