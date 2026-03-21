@@ -1,16 +1,17 @@
 import java.io.*;
 import java.util.ArrayList;
+String searchBy = "";
 
 
 
 
 
-  ArrayList<DataPoint> jfkFlights; //For later
-  ArrayList<DataPoint> filterJFK(){ //Function that filters
+  ArrayList<DataPoint> filteredFlights; //For later
+  ArrayList<DataPoint> filterByFlight(){ //Function that filters
   ArrayList<DataPoint> filteredFlights = new ArrayList<DataPoint>(); //New arrayList
   
   for (DataPoint f : dataPoints){ //For loop
-  if (f.ORIGIN.equals("JFK")){ //If the origin is JFK then add it. Replacable with a variable when sorting by more flights
+  if (f.ORIGIN.equals(searchBy)){ //If the origin is JFK then add it. Replacable with a variable when sorting by more flights
     filteredFlights.add(f);
     
   }
@@ -175,7 +176,7 @@ void setup() {
   }
   
   System.out.println(count);
-  jfkFlights = filterJFK(); //Adding to the array list created at the top
+  filteredFlights = filterByFlight(); //Adding to the array list created at the top
 }
 
 final int ScreenX = 900;
@@ -200,16 +201,18 @@ void drawFlights(){
     System.out.println(row);
     
    
-    while (textWidth(row) > (ScreenY - 50) ){
-       size -= 0.5;
-       textSize(size);
-      
+    size = 16;             // reset each row
+        textSize(size);        // apply a default size
+    
+    while (textWidth(row) > (ScreenY - 50) && size > 8) {  // add minimum size
+        size -= 0.5;
+        textSize(size);
     }
   }
   }
     
   if (filterSelected == true){
-  for (DataPoint f : jfkFlights) { 
+  for (DataPoint f : filteredFlights) { 
      
     String row = f.FL_DATE + " | " + f.MKT_CARRIER + " | " + f.MKT_CARRIER_FL_NUM
     + f.ORIGIN + " | " + f.ORIGIN_CITY_NAME + " | " + f.ORIGIN_STATE_ABR + " | " +
