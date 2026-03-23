@@ -1,8 +1,9 @@
 import java.io.*;
 import java.util.ArrayList;
 String searchBy = "";
-
-
+boolean filterSelected = true;
+SearchBar departure;
+SearchBar search;
 
 
 
@@ -76,7 +77,9 @@ String DEST_STATE_ABR,int DEST_WAC,int CRS_DEP_TIME,int DEP_TIME,int CRS_ARR_TIM
 ArrayList<DataPoint> dataPoints;
 
 void setup() {
-  
+ 
+  departure = new SearchBar(50, 100, 340, 75,"Departure", true);
+  search = new SearchBar(415,100,140,75,"Search", false);
   
    
   
@@ -201,13 +204,15 @@ void drawFlights(){
     System.out.println(row);
     
    
-    size = 16;             // reset each row
+   
+        size = 16;             // reset each row
         textSize(size);        // apply a default size
     
     while (textWidth(row) > (ScreenY - 50) && size > 8) {  // add minimum size
         size -= 0.5;
         textSize(size);
     }
+
   }
   }
     
@@ -222,11 +227,15 @@ void drawFlights(){
     System.out.println(row);
     
    
-    while (textWidth(row) > (ScreenY - 50) ){
-       size -= 0.5;
-       textSize(size);
-      
+    
+    size = 16;        // reset font size before each row
+    textSize(size);
+    
+    while (textWidth(row) > (ScreenY - 50) && size > 8) {
+        size -= 0.5;
+        textSize(size);
     }
+
    
     text(row, 40, y);
 
@@ -246,5 +255,33 @@ void settings(){
 }
 
 void draw() {
+  fill(0,0,230);
+  noStroke();
+  rect(0,0,width,height/3); //departure
+  
+  fill(255);
+  noStroke();
+  rect(0,height/3,width,height);//search
+  
+  search.display();//display search bar
+  departure.display();//display des bar
   drawFlights();
+}
+
+void mousePressed(){
+  search.handleClick();
+  departure.handleClick();
+  
+  if (search.active) {
+    searchBy = departure.getText();
+    println("SEARCH CLICKED! Departure = " + searchBy);
+    filteredFlights = filterByFlight(); //Redo flights
+    departure.typedText = "";
+  }
+
+  
+}
+void keyPressed(){
+   // Only departure bar receives typing not search
+  departure.handleTyping(key);
 }
