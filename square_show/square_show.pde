@@ -1,6 +1,6 @@
 void setup() {
   //fullScreen();
-  size(1400, 1200,P2D);//P2D makes smoother
+  size(1400, 800,P2D);//P2D makes smoother
 }
 
 void draw() {
@@ -8,7 +8,7 @@ void draw() {
   displayFilters();
   float topOffset = 300;        // grid starts 100 down
   float colW = width / 18.0;   // width of each column
-  float colH = (height - topOffset) / 10.0;  // height of each row
+  float colH = (height - topOffset) / 8.0;  // height of each row
 
   stroke(2);
   strokeWeight(1);
