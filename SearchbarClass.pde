@@ -1,3 +1,4 @@
+
 class SearchBar {
   //attriubutes
   int x, y, w, h;
@@ -36,20 +37,15 @@ class SearchBar {
     rect(x, y, w, h, 25); //create both bars, with designated x,y,w,h. 25 = curved edges
     fill(0);
     textSize(25);
-
-    //if (!active) { // if not clicked print label for des/ search
-    //  text(label, x + 20, y + h/2+10);
-    //}
-    // show label only when empty + inactive
     
     if (!displayText) {
       // Search bar always show text
-      text(label, x + 20, y + h/2 + 10);
+      text(label, x + 50, y + h/2 + 10);
     } else if (!active && typedText.equals("")) {
       // Departure bar shows text when its empty
-      text(label, x + 20, y + h/2 + 10);
+      text(label, x + 60, y + h/2 + 10);
     } else {
-      text(typedText, x + 20, y + h/2 + 10);
+      text(typedText, x + 60, y + h/2 + 10);
     }
   }
 
