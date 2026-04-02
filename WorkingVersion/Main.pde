@@ -11,6 +11,7 @@ boolean filterByDiverted = false;
 boolean flipList = false;
 
 boolean mapMode = false;
+boolean barChartMode = false;
 
 
 ArrayList<DataPoint> dataPoints;
@@ -21,7 +22,23 @@ RadioButton backButton;
 RadioButton confirmButton;
 RadioButton sortMostRecent;
 
+RadioButton barChartScreen;
+RadioButton returnFromBarChart;
+
 PImage map;
+
+public float NY = 0.0;
+public float CA = 0.0;
+public float FL = 0.0;
+public float VA = 0.0;
+public float WA = 0.0;
+public float IL = 0.0;
+public float TX = 0.0;
+
+int currentBarChart = 1;
+
+
+
 
 
 int currentPage = 0;
@@ -42,11 +59,14 @@ void setup() {
   departure = new SearchBar(50, 100, 340, 75,"Departure", true);
   search = new SearchBar(415,100,140,75,"Search", false);
   sortMostRecent = new RadioButton(1000, 170, 220, 42, "Sort by most recent");
+  
+  barChartScreen = new RadioButton(700, 80, 100, 100, "Show bar chart");
+  returnFromBarChart = new RadioButton(20, 3 , 100, 35, "Return to home"); 
    
    buttons = new RadioButton[] {
     new RadioButton(1000, 50, 220, 42, "Show cancelled flights"),
     new RadioButton(1000, 110, 220, 42, "Hide diverted flights"),
-    new RadioButton(1000, 230, 220, 42, "Map View")
+    new RadioButton(850, 80, 100, 100, "Map View")
    };
    
    
@@ -111,7 +131,7 @@ public ArrayList<DataPoint> getFlightsToDisplay(int page) {
   
   int amountOfEntriesOnPage = 10;
   if (filterSelected & (filteredFlights.size() < amountOfEntriesOnPage)) { 
-  amountOfEntriesOnPage = filteredFlights.size();
+      amountOfEntriesOnPage = filteredFlights.size();
   }
 
   for (int i = 0; i < amountOfEntriesOnPage; i++) {
@@ -119,6 +139,7 @@ public ArrayList<DataPoint> getFlightsToDisplay(int page) {
     holder = filteredFlights.get(page * amountOfEntriesOnPage + i);}
     else{
     holder = dataPoints.get(page * amountOfEntriesOnPage + i);}
+    
     flightsToDisplay.add(holder);
   }
 
@@ -135,6 +156,13 @@ public ArrayList<DataPoint> filterByFlight(){ //Function that filters
       && (!filterByDiverted || f.DIVERTED)) 
       {
         filteredFlights.add(f);  
+        if(f.DEST_STATE_ABR.equals("CA")) CA++;
+        else if (f.DEST_STATE_ABR.equals("NY")) NY++;
+        else if (f.DEST_STATE_ABR.equals("FL")) FL++;
+        else if (f.DEST_STATE_ABR.equals("VA")) VA++;
+        else if (f.DEST_STATE_ABR.equals("WA")) WA++;
+        else if (f.DEST_STATE_ABR.equals("IL")) IL++;
+        else if (f.DEST_STATE_ABR.equals("TX")) TX++;
       }
     }
     else {
@@ -156,12 +184,26 @@ public ArrayList<DataPoint> filterByFlight(){ //Function that filters
       && (!filterByDiverted || f.DIVERTED)) 
       {
         filteredFlights.add(f);  
+        if(f.DEST_STATE_ABR.equals("CA")) CA++;
+        else if (f.DEST_STATE_ABR.equals("NY")) NY++;
+        else if (f.DEST_STATE_ABR.equals("FL")) FL++;
+        else if (f.DEST_STATE_ABR.equals("VA")) VA++;
+        else if (f.DEST_STATE_ABR.equals("WA")) WA++;
+        else if (f.DEST_STATE_ABR.equals("IL")) IL++;
+        else if (f.DEST_STATE_ABR.equals("TX")) TX++;
       }
     }
     else {
       if ((!filterByCancelled || f.CANCELLED) && (!filterByDiverted || f.DIVERTED)) 
       {
         filteredFlights.add(f);  
+        if(f.DEST_STATE_ABR.equals("CA")) CA++;
+        else if (f.DEST_STATE_ABR.equals("NY")) NY++;
+        else if (f.DEST_STATE_ABR.equals("FL")) FL++;
+        else if (f.DEST_STATE_ABR.equals("VA")) VA++;
+        else if (f.DEST_STATE_ABR.equals("WA")) WA++;
+        else if (f.DEST_STATE_ABR.equals("IL")) IL++;
+        else if (f.DEST_STATE_ABR.equals("TX")) TX++;
       }
     }   
     

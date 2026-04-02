@@ -28,6 +28,14 @@ public ArrayList<DataPoint> CSVToDataPoint(String file, boolean hideCancelled, b
           String DEST           = parts[7];
           String DEST_CITY_NAME = parts[8];
           String DEST_STATE_ABR = parts[9];
+          if(DEST_STATE_ABR.equals("CA")) CA++;
+          else if (DEST_STATE_ABR.equals("NY")) NY++;
+          else if (DEST_STATE_ABR.equals("FL")) FL++;
+          else if (DEST_STATE_ABR.equals("VA")) VA++;
+          else if (DEST_STATE_ABR.equals("WA")) WA++;
+          else if (DEST_STATE_ABR.equals("IL")) IL++;
+          else if (DEST_STATE_ABR.equals("TX")) TX++;
+
 
           int DEST_WAC     = parts[10].equals("") ? 0 : Integer.parseInt(parts[10]);
           int CRS_DEP_TIME = parts[11].equals("") ? 0 : Integer.parseInt(parts[11]);
