@@ -1,12 +1,12 @@
 class RadioButton {
   String label;
-  boolean filterSelected;  
+  boolean filterSelected;
   float x, y, w, h;
   color baseColour = color(200);
   color hoverColour = color(180);
   color activeColour = color(100, 180, 255);
-  
-  
+  color textColour;
+
   RadioButton(float x, float y, float w, float h, String label) {
     this.x = x;
     this.y = y;
@@ -14,8 +14,8 @@ class RadioButton {
     this.h = h;
     this.label = label;
     this.filterSelected = false;
-  }  
-  
+  }
+
   void display() {           // drawing button body
     if (filterSelected) {
       fill(activeColour);
@@ -24,26 +24,30 @@ class RadioButton {
     } else {
       fill(baseColour);
     }
-    
+
     stroke(80);
     strokeWeight(filterSelected ? 2.5 : 1);
     rect(x, y, w, h, 8);
-    
-    fill(filterSelected ? 255 : 50);
+
+
+    if (filterSelected) textColour = 255;
+    else textColour = 50;
+    fill(textColour);
     noStroke();
     textSize(15);
     textAlign(CENTER, CENTER);
     text(label, x + w / 2, y + h / 2);
   }
-  
-  boolean isInside() { 
+
+  boolean isInside() {
     return mouseX >= x && mouseX <= x + w &&
-           mouseY >= y && mouseY <= y + h;
+      mouseY >= y && mouseY <= y + h;
   }
-  
+
   boolean handleClick() {      // will be called in mousePressed() in main sketch
     if (isInside()) {
       filterSelected = !filterSelected;
+
       return true;
     }
     return false;
@@ -62,85 +66,122 @@ void drawArrows() {
 }
 
 void mousePressed() {
-  // Arrows
-  if (mouseX > 80 && mouseX < 120 && mouseY > height-55 && mouseY < height-5) {
-    currentPage = max(0, currentPage - 1);
-  }
-  if (mouseX > width-120 && mouseX < width-80 && mouseY > height-55 && mouseY < height-5) {
-    currentPage++;
-  }
+  if (screenState.equals(HOME)) { //if we aren't on the main screen, the buttons won't be clickable
+    // Arrows
+    if (mouseX > 80 && mouseX < 120 && mouseY > height-55 && mouseY < height-5) {
+      currentPage = max(0, currentPage - 1);
+    }
+    if (mouseX > width-120 && mouseX < width-80 && mouseY > height-55 && mouseY < height-5) {
+      currentPage++;
+    }
 
-  // Radio buttons — single loop only
-  for (int i = 0; i < buttons.length; i++) {
-    if (buttons[i].handleClick()) {
-      for (int j = 0; j < buttons.length; j++) {
-        if (j != i) buttons[j].filterSelected = false;
+    // Radio buttons — single loop only
+
+    for (int i = 0; i < buttons.length; i++) {
+      if (buttons[i].handleClick()) {
+        for (int j = 0; j < buttons.length; j++) {
+          if (j != i) buttons[j].filterSelected = false;
+        }
       }
     }
+
+    sortMostRecent.handleClick();
+    barChartScreen.handleClick();
   }
-  
-  sortMostRecent.handleClick();
-  
+
+
+
+  if (screenState.equals(BARCHART)) {
+    returnFromBarChart.handleClick();
+  }
+
+
   // Update flags after the loop, not inside it
   filterByCancelled = buttons[0].filterSelected;
   filterByDiverted  = buttons[1].filterSelected;
-  mapMode = buttons[2].filterSelected;
+
+  if (buttons[2].handleClick()) {
+    screenState = MAP;
+    return;
+  }
+
   flipList = sortMostRecent.filterSelected;
 
+
+  if (barChartScreen.handleClick()) {
+    screenState = BARCHART;
+  }
+
+
+
   // Search bar
-  search.handleClick();
-  departure.handleClick();
+  if (screenState.equals(HOME)) search.handleClick();
+  if (screenState.equals(HOME)) departure.handleClick();
 
   if (search.active) {
+    NY = 0.0;
+    CA = 0.0;
+    FL = 0.0;
+    VA = 0.0;
+    WA = 0.0;
+    IL = 0.0;
+    TX = 0.0;
     searchBy = departure.getText();
     println("SEARCH CLICKED! Departure = " + searchBy);
-    searchByState = false;
+
+
     departure.typedText = "";
   }
-  filterSelected = (filterByCancelled || filterByDiverted || !searchBy.isEmpty() || flipList);
+  filterSelected = (filterByCancelled || filterByDiverted || !searchBy.isEmpty() || flipList ||  searchByState);
   filteredFlights = filterByFlight();
-  
+
+
   ///MAP BUTTONS
-  
-  if (mapMode) {
-  for (int i = 0; i < mapButtons.length; i++) {
-    if (mapButtons[i].handleClick()) {
-      
-      // make only one selected
-      for (int j = 0; j < mapButtons.length; j++) {
-        if (j != i) mapButtons[j].filterSelected = false;
+
+  if (screenState.equals(MAP)) {
+    for (int i = 0; i < mapButtons.length; i++) {
+      if (mapButtons[i].handleClick()) {
+
+        // make only one selected
+        for (int j = 0; j < mapButtons.length; j++) {
+          if (j != i) mapButtons[j].filterSelected = false;
+        }
+      }
+      if (backButton.handleClick()) {
+
+        searchByState = false;
+        screenState = HOME;
+
+        println(filterSelected);
       }
 
- 
-    }
-    if (backButton.handleClick()) {
-        mapMode = false;
-        buttons[2].filterSelected = false;
-    }
-    
-     if (confirmButton.handleClick()) {
-      searchByState = true;
-    for (int l = 0; l < mapButtons.length; l++) {
-        if (mapButtons[l].filterSelected) {
-  
-          searchBy = mapAirports[l];   // THIS is the key line
-          println("Selected airport: " + searchBy);
-  
-          filteredFlights = filterByFlight();
-          break;
+      if (confirmButton.handleClick()) {
+        searchByState = true;
+        filterSelected = true;
+        for (int l = 0; l < mapButtons.length; l++) {
+          if (mapButtons[l].filterSelected) {
+
+            searchBy = mapAirports[l];
+
+            println("Selected airport: " + searchBy);
+
+            filteredFlights = filterByFlight();
+            break;
+          }
         }
+        screenState = HOME;
+        buttons[2].filterSelected = false;
+      }
     }
-    mapMode = false;
-    buttons[2].filterSelected = false;
   }
-  }
-  }
-  
-  
-  
 }
 
-
-void keyPressed(){
+void keyPressed() {
+  // search bar
   departure.handleTyping(key);
+
+  // bar chart
+  if (key == '1') currentBarChart = 1;
+  if (key == '2') currentBarChart = 2;
+  if (key == '3') currentBarChart = 3;
 }

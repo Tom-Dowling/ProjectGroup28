@@ -17,11 +17,11 @@ class SearchBar {
     this.displayText = displayText;
   }
   //methods
-  
-    //!Getter
-    String getText() {
-      return typedText;
-   }
+
+  //!Getter
+  String getText() {
+    return typedText;
+  }
 
   void display() {
     if (mouseX>=x&&mouseX<=x+w&& //this checks if its in either search/des bar
@@ -37,7 +37,7 @@ class SearchBar {
     rect(x, y, w, h, 25); //create both bars, with designated x,y,w,h. 25 = curved edges
     fill(0);
     textSize(25);
-    
+
     if (!displayText) {
       // Search bar always show text
       text(label, x + 50, y + h/2 + 10);
@@ -58,12 +58,12 @@ class SearchBar {
     }
   }
   // so we can type into destination bar, NOT search bar
-  void handleTyping(char key) { 
+  void handleTyping(char key) {
     if (active) { // only happens when clicked onto
-    
-    // if we want to remove a char, if there is more than 0 chars
-      if (key == BACKSPACE && typedText.length() > 0) { 
-       // This is the standard way to delete the last character in a String.
+
+      // if we want to remove a char, if there is more than 0 chars
+      if (key == BACKSPACE && typedText.length() > 0) {
+        // This is the standard way to delete the last character in a String.
         typedText = typedText.substring(0, typedText.length() - 1);
       } else if (key != CODED) {
         // to tyoe out character
