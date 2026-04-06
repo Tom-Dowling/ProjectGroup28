@@ -69,13 +69,18 @@ class RadioButton {
 }
 
 
+
 void drawArrows() {
+  int maxPage;
+  if (filterSelected) maxPage = filteredFlights.size()/10;
+  else maxPage = dataPoints.size()/10;  
+    
   // Left arrow (greyed out on first page)
   fill(currentPage > 0 ? color(70, 130, 255) : color(60));
   triangle(80, height-30, 120, height-55, 120, height-5);
 
   // Right arrow
-  fill(color(70, 130, 255));
+  fill(currentPage+1 <= maxPage ? color(70, 130, 255) : color(60));
   triangle(width-80, height-30, width-120, height-55, width-120, height-5);
 }
 
@@ -87,10 +92,10 @@ void mousePressed() {
     }
     if (mouseX > width-120 && mouseX < width-80 && mouseY > height-55 && mouseY < height-5) {
       int maxPage;
-      if (filterSelected) maxPage = filteredFlights.size()/20;
-      else maxPage = dataPoints.size()/20;
+      if (filterSelected) maxPage = filteredFlights.size()/10;
+      else maxPage = dataPoints.size()/10;
       
-      if (currentPage+1 != maxPage) currentPage = max(currentPage + 1, maxPage);
+      if (!(currentPage+1 > maxPage)) currentPage++;
     }
 
   // Radio buttons — single loop only

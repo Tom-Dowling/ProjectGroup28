@@ -43,13 +43,13 @@ public ArrayList<DataPoint> CSVToDataPoint(String file, boolean hideCancelled, b
           int CRS_ARR_TIME = parts[13].equals("") ? 0 : Integer.parseInt(parts[13]);
           int ARR_TIME     = parts[14].equals("") ? 0 : Integer.parseInt(parts[14]);
 
-          boolean CANCELLED = parts[15].trim().equals("0") ? false : true;
+          boolean CANCELLED = parts[15].trim().equals("0.00") ? false : true;
           if (hideCancelled == true && CANCELLED == true) continue;
 
-          boolean DIVERTED  = parts[16].trim().equals("0") ? false : true;
+          boolean DIVERTED  = parts[16].trim().equals("0.00") ? false : true;
           if (hideDiverted == true && DIVERTED == true) continue;
 
-          int DISTANCE = Integer.parseInt(parts[17]);
+          float DISTANCE = Float.parseFloat(parts[17]);
 
           dataPoints.add(new DataPoint(
             FL_DATE, MKT_CARRIER, MKT_CARRIER_FL_NUM,
