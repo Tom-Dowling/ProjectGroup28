@@ -1,5 +1,5 @@
 public ArrayList<DataPoint> CSVToDataPoint(String file, boolean hideCancelled, boolean hideDiverted) {
-  
+
   ArrayList<DataPoint> dataPoints = new ArrayList<DataPoint>();
 
   BufferedReader reader = null;
@@ -28,7 +28,7 @@ public ArrayList<DataPoint> CSVToDataPoint(String file, boolean hideCancelled, b
           String DEST           = parts[7];
           String DEST_CITY_NAME = parts[8];
           String DEST_STATE_ABR = parts[9];
-          if(DEST_STATE_ABR.equals("CA")) CA++;
+          if (DEST_STATE_ABR.equals("CA")) CA++;
           else if (DEST_STATE_ABR.equals("NY")) NY++;
           else if (DEST_STATE_ABR.equals("FL")) FL++;
           else if (DEST_STATE_ABR.equals("VA")) VA++;
@@ -45,7 +45,7 @@ public ArrayList<DataPoint> CSVToDataPoint(String file, boolean hideCancelled, b
 
           boolean CANCELLED = parts[15].trim().equals("0") ? false : true;
           if (hideCancelled == true && CANCELLED == true) continue;
-          
+
           boolean DIVERTED  = parts[16].trim().equals("0") ? false : true;
           if (hideDiverted == true && DIVERTED == true) continue;
 
@@ -57,19 +57,23 @@ public ArrayList<DataPoint> CSVToDataPoint(String file, boolean hideCancelled, b
             DEST, DEST_CITY_NAME, DEST_STATE_ABR, DEST_WAC,
             CRS_DEP_TIME, DEP_TIME, CRS_ARR_TIME, ARR_TIME,
             CANCELLED, DIVERTED, DISTANCE
-          ));
-        } catch (Exception e) {
+            ));
+        }
+        catch (Exception e) {
           System.out.println("bad row " + count + e.getMessage());
         }
       }
       count++;
     }
-  } catch (Exception e) {
+  }
+  catch (Exception e) {
     //e.printStackTrace();
-  } finally {
+  }
+  finally {
     try {
       if (reader != null) reader.close();
-    } catch (IOException e) {
+    }
+    catch (IOException e) {
       e.printStackTrace();
     }
   }

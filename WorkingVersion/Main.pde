@@ -1,6 +1,10 @@
 import java.io.*;
 import java.util.ArrayList;
 
+UIHandler benUI;
+int planeX;
+boolean movePlane;
+
 SearchBar departure;
 SearchBar search;
 String searchBy = "";
@@ -9,9 +13,12 @@ boolean filterSelected = false;
 boolean filterByCancelled = false; 
 boolean filterByDiverted = false;
 boolean flipList = false;
+boolean searchByState = false;
 
-boolean mapMode = false;
-boolean barChartMode = false;
+final String HOME     = "home";
+final String MAP      = "map";
+final String BARCHART = "barchart";
+String screenState = HOME;
 
 
 ArrayList<DataPoint> dataPoints;
@@ -34,10 +41,13 @@ public float VA = 0.0;
 public float WA = 0.0;
 public float IL = 0.0;
 public float TX = 0.0;
+public float HI = 0.0;
+public float OR = 0.0;
+public float NM = 0.0;
+public float NJ = 0.0;
+
 
 int currentBarChart = 1;
-
-
 
 
 
@@ -54,13 +64,17 @@ void settings() {
 }
 
 void setup() {
-   map = loadImage("map.png");
+  benUI = new UIHandler();
+  planeX =1150;
+  movePlane = false;
+  
+  map = loadImage("map.png");
   
   departure = new SearchBar(50, 100, 340, 75,"Departure", true);
   search = new SearchBar(415,100,140,75,"Search", false);
   sortMostRecent = new RadioButton(1000, 170, 220, 42, "Sort by most recent");
   
-  barChartScreen = new RadioButton(700, 80, 100, 100, "Show bar chart");
+  barChartScreen = new RadioButton(700, 80, 100, 100, "Bar chart");
   returnFromBarChart = new RadioButton(20, 3 , 100, 35, "Return to home"); 
    
    buttons = new RadioButton[] {
@@ -118,9 +132,6 @@ void setup() {
   
   backButton = new RadioButton(50, 20, 120, 42, "Back");
   confirmButton = new RadioButton(200, 20, 120, 42, "Confirm");
-
-  
-
 }
 
 
@@ -136,79 +147,125 @@ public ArrayList<DataPoint> getFlightsToDisplay(int page) {
 
   for (int i = 0; i < amountOfEntriesOnPage; i++) {
     if (filterSelected) {
-    holder = filteredFlights.get(page * amountOfEntriesOnPage + i);}
+      if ((page * amountOfEntriesOnPage + i) >= filteredFlights.size()) continue;
+      holder = filteredFlights.get(page * amountOfEntriesOnPage + i);}
     else{
-    holder = dataPoints.get(page * amountOfEntriesOnPage + i);}
-    
-    flightsToDisplay.add(holder);
+      if ((page * amountOfEntriesOnPage + i) >= dataPoints.size()) continue;
+      holder = dataPoints.get(page * amountOfEntriesOnPage + i);
+      }
+      
+      
+      flightsToDisplay.add(holder);
   }
 
   return flightsToDisplay;
 }
 
-public ArrayList<DataPoint> filterByFlight(){ //Function that filters
+public ArrayList<DataPoint> filterByFlight() { //Function that filters
   ArrayList<DataPoint> filteredFlights = new ArrayList<DataPoint>(); //New arrayList
-  if(flipList ==false) {
-  for (DataPoint f : dataPoints){ //For loop
-    if (!searchBy.trim().equals("")) {
-      if (f.ORIGIN.equalsIgnoreCase(searchBy.trim()) //If the origin is JFK then add it. Replacable with a variable when sorting by more flights
-      && (!filterByCancelled || f.CANCELLED)
-      && (!filterByDiverted || f.DIVERTED)) 
-      {
-        filteredFlights.add(f);  
-        if(f.DEST_STATE_ABR.equals("CA")) CA++;
-        else if (f.DEST_STATE_ABR.equals("NY")) NY++;
-        else if (f.DEST_STATE_ABR.equals("FL")) FL++;
-        else if (f.DEST_STATE_ABR.equals("VA")) VA++;
-        else if (f.DEST_STATE_ABR.equals("WA")) WA++;
-        else if (f.DEST_STATE_ABR.equals("IL")) IL++;
-        else if (f.DEST_STATE_ABR.equals("TX")) TX++;
+  if (searchByState == false) {
+    if (flipList ==false) {
+      for (DataPoint f : dataPoints) { //For loop
+        if (!searchBy.trim().equals("")) {
+          if (f.ORIGIN.equalsIgnoreCase(searchBy.trim()) //If the origin is JFK then add it. Replacable with a variable when sorting by more flights
+            && (!filterByCancelled || f.CANCELLED)
+            && (!filterByDiverted || f.DIVERTED))
+          {
+            filteredFlights.add(f);
+            if (f.DEST_STATE_ABR.equals("CA")) CA++;
+            else if (f.DEST_STATE_ABR.equals("NY")) NY++;
+            else if (f.DEST_STATE_ABR.equals("FL")) FL++;
+            else if (f.DEST_STATE_ABR.equals("VA")) VA++;
+            else if (f.DEST_STATE_ABR.equals("WA")) WA++;
+            else if (f.DEST_STATE_ABR.equals("IL")) IL++;
+            else if (f.DEST_STATE_ABR.equals("TX")) TX++;
+            else if (f.DEST_STATE_ABR.equals("OR")) OR++;
+            else if (f.DEST_STATE_ABR.equals("NM")) NM++;
+            else if (f.DEST_STATE_ABR.equals("NJ")) NJ++;
+          }
+        } else {
+          if ((!filterByCancelled || f.CANCELLED) && (!filterByDiverted || f.DIVERTED))
+          {
+            filteredFlights.add(f);
+          }
+        }
+      }
+    } else {
+      for (int i = dataPoints.size() - 1; i >=0; i-- ) { //For loop
+        DataPoint f = dataPoints.get(i);
+        if (!searchBy.trim().equals("")) {
+          if (f.ORIGIN.equalsIgnoreCase(searchBy.trim()) //If the origin is JFK then add it. Replacable with a variable when sorting by more flights
+            && (!filterByCancelled || f.CANCELLED)
+            && (!filterByDiverted || f.DIVERTED))
+          {
+            filteredFlights.add(f);
+            if (f.DEST_STATE_ABR.equals("CA")) CA++;
+            else if (f.DEST_STATE_ABR.equals("NY")) NY++;
+            else if (f.DEST_STATE_ABR.equals("FL")) FL++;
+            else if (f.DEST_STATE_ABR.equals("VA")) VA++;
+            else if (f.DEST_STATE_ABR.equals("WA")) WA++;
+            else if (f.DEST_STATE_ABR.equals("IL")) IL++;
+            else if (f.DEST_STATE_ABR.equals("TX")) TX++;  
+            else if (f.DEST_STATE_ABR.equals("OR")) OR++;
+            else if (f.DEST_STATE_ABR.equals("NM")) NM++;
+            else if (f.DEST_STATE_ABR.equals("NJ")) NJ++;
+          }
+        } else {
+          if ((!filterByCancelled || f.CANCELLED) && (!filterByDiverted || f.DIVERTED))
+          {
+            filteredFlights.add(f);
+            if (f.DEST_STATE_ABR.equals("CA")) CA++;
+            else if (f.DEST_STATE_ABR.equals("NY")) NY++;
+            else if (f.DEST_STATE_ABR.equals("FL")) FL++;
+            else if (f.DEST_STATE_ABR.equals("VA")) VA++;
+            else if (f.DEST_STATE_ABR.equals("WA")) WA++;
+            else if (f.DEST_STATE_ABR.equals("IL")) IL++;
+            else if (f.DEST_STATE_ABR.equals("TX")) TX++;  
+            else if (f.DEST_STATE_ABR.equals("OR")) OR++;
+            else if (f.DEST_STATE_ABR.equals("NM")) NM++;
+            else if (f.DEST_STATE_ABR.equals("NJ")) NJ++;
+          }
+        }
       }
     }
-    else {
-      if ((!filterByCancelled || f.CANCELLED) && (!filterByDiverted || f.DIVERTED)) 
-      {
-        filteredFlights.add(f);  
+
+    return filteredFlights;
+  } else {
+    if (flipList ==false) {
+      for (DataPoint f : dataPoints) { //For loop
+        if (!searchBy.trim().equals("")) {
+          if (f.ORIGIN_STATE_ABR.equalsIgnoreCase(searchBy.trim()) //If the origin is JFK then add it. Replacable with a variable when sorting by more flights
+            && (!filterByCancelled || f.CANCELLED)
+            && (!filterByDiverted || f.DIVERTED))
+          {
+            filteredFlights.add(f);
+          }
+        } else {
+          if ((!filterByCancelled || f.CANCELLED) && (!filterByDiverted || f.DIVERTED))
+          {
+            filteredFlights.add(f);
+          }
+        }
       }
-    }   
-    
-  }
-  }
-  
-  else {
-  for (int i = dataPoints.size() - 1; i >=0 ; i-- ){ //For loop
-  DataPoint f = dataPoints.get(i);
-    if (!searchBy.trim().equals("")) {
-      if (f.ORIGIN.equalsIgnoreCase(searchBy.trim()) //If the origin is JFK then add it. Replacable with a variable when sorting by more flights
-      && (!filterByCancelled || f.CANCELLED)
-      && (!filterByDiverted || f.DIVERTED)) 
-      {
-        filteredFlights.add(f);  
-        if(f.DEST_STATE_ABR.equals("CA")) CA++;
-        else if (f.DEST_STATE_ABR.equals("NY")) NY++;
-        else if (f.DEST_STATE_ABR.equals("FL")) FL++;
-        else if (f.DEST_STATE_ABR.equals("VA")) VA++;
-        else if (f.DEST_STATE_ABR.equals("WA")) WA++;
-        else if (f.DEST_STATE_ABR.equals("IL")) IL++;
-        else if (f.DEST_STATE_ABR.equals("TX")) TX++;
+    } else {
+      for (int i = dataPoints.size() - 1; i >=0; i-- ) { //For loop
+        DataPoint f = dataPoints.get(i);
+        if (!searchBy.trim().equals("")) {
+          if (f.ORIGIN_STATE_ABR.equalsIgnoreCase(searchBy.trim()) //If the origin is JFK then add it. Replacable with a variable when sorting by more flights
+            && (!filterByCancelled || f.CANCELLED)
+            && (!filterByDiverted || f.DIVERTED))
+          {
+            filteredFlights.add(f);
+          }
+        } else {
+          if ((!filterByCancelled || f.CANCELLED) && (!filterByDiverted || f.DIVERTED))
+          {
+            filteredFlights.add(f);
+          }
+        }
       }
     }
-    else {
-      if ((!filterByCancelled || f.CANCELLED) && (!filterByDiverted || f.DIVERTED)) 
-      {
-        filteredFlights.add(f);  
-        if(f.DEST_STATE_ABR.equals("CA")) CA++;
-        else if (f.DEST_STATE_ABR.equals("NY")) NY++;
-        else if (f.DEST_STATE_ABR.equals("FL")) FL++;
-        else if (f.DEST_STATE_ABR.equals("VA")) VA++;
-        else if (f.DEST_STATE_ABR.equals("WA")) WA++;
-        else if (f.DEST_STATE_ABR.equals("IL")) IL++;
-        else if (f.DEST_STATE_ABR.equals("TX")) TX++;
-      }
-    }   
-    
+
+    return filteredFlights;
   }
-  }  
-  
-  return filteredFlights;  
-  }
+}
