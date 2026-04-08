@@ -5,34 +5,38 @@ UIHandler benUI;
 int planeX;
 boolean movePlane;
 
-SearchBar departure;
-SearchBar search;
-String searchBy = "";
+// Search bars for filtering flights
+SearchBar departure; // user types departure airport
+SearchBar search; // triggers search
+String searchBy = ""; //Stores the airport code being searched E.g. "JFK"
 
+// Filter toggles
 boolean filterSelected = false;
 boolean filterByCancelled = false; 
 boolean filterByDiverted = false;
-boolean flipList = false;
-boolean searchByState = false;
+boolean flipList = false; 
+boolean searchByState = false; //Toggles search mode
 
+// Screens
 final String HOME     = "home";
 final String MAP      = "map";
 final String BARCHART = "barchart";
 String screenState = HOME;
 
-
-ArrayList<DataPoint> dataPoints;
-RadioButton[] buttons;
+// ArrayLists
 ArrayList<DataPoint> filteredFlights;
+ArrayList<DataPoint> dataPoints;
+
+//Buttons
+RadioButton[] buttons;
 MapButton[] mapButtons;
 RadioButton backButton;
 RadioButton confirmButton;
 RadioButton sortMostRecent;
-
 RadioButton barChartScreen;
 RadioButton returnFromBarChart;
 
-PImage map;
+PImage map; //Image of the map
 
 public float NY = 0.0;
 public float CA = 0.0;
@@ -93,16 +97,22 @@ void setup() {
   benUI = new UIHandler();
   planeX =1150;
   movePlane = false;
-  
+
+  // Loading map image
   map = loadImage("map.png");
-  
+
+ // Creating search UI
   departure = new SearchBar(50, 100, 340, 75,"Departure", true);
   search = new SearchBar(415,100,140,75,"Search", false);
+
+  // Sorting button
   sortMostRecent = new RadioButton(1000, 170, 220, 42, "Sort by most recent");
-  
+
+  // Navigation buttons
   barChartScreen = new RadioButton(700, 80, 100, 100, "Bar chart");
   returnFromBarChart = new RadioButton(20, 3 , 100, 35, "Return to home"); 
-   
+
+// Filter + navigation buttons
    buttons = new RadioButton[] {
     new RadioButton(1000, 50, 220, 42, "Show cancelled flights"),
     new RadioButton(1000, 110, 220, 42, "Show diverted flights"),
@@ -114,7 +124,7 @@ void setup() {
   dataPoints = CSVToDataPoint("flights_full (1).csv", filterByCancelled, filterByDiverted);
   filteredFlights = filterByFlight();
 
-
+  // Map buttons
   mapButtons = new MapButton[] {
 
   new MapButton(200, 140, 15),   // PDX – Oregon
@@ -155,7 +165,8 @@ void setup() {
   new MapButton(1180, 245, 15),  // JFK – New York
   new MapButton(1227, 215, 15),  // BTV – Vermont
   };
-  
+
+  //Navigation buttons
   backButton = new RadioButton(50, 20, 120, 42, "Back");
   confirmButton = new RadioButton(200, 20, 120, 42, "Confirm");
 }
