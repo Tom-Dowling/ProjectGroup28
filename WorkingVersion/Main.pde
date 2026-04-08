@@ -46,6 +46,32 @@ public float OR = 0.0;
 public float NM = 0.0;
 public float NJ = 0.0;
 
+public float initialNY = 0.0;
+public float initialCA = 0.0;
+public float initialFL = 0.0;
+public float initialVA = 0.0;
+public float initialWA = 0.0;
+public float initialIL = 0.0;
+public float initialTX = 0.0;
+public float initialHI = 0.0;
+public float initialOR = 0.0;
+public float initialNM = 0.0;
+public float initialNJ = 0.0;
+
+public float jan1 = 0.0;
+public float jan2 = 0.0;
+public float jan3 = 0.0;
+public float jan4 = 0.0;
+public float jan5 = 0.0;
+public float jan6 = 0.0;
+
+public float initialJan1 = 0.0;
+public float initialJan2 = 0.0;
+public float initialJan3 = 0.0;
+public float initialJan4 = 0.0;
+public float initialJan5 = 0.0;
+public float initialJan6 = 0.0;
+
 
 int currentBarChart = 1;
 
@@ -79,13 +105,13 @@ void setup() {
    
    buttons = new RadioButton[] {
     new RadioButton(1000, 50, 220, 42, "Show cancelled flights"),
-    new RadioButton(1000, 110, 220, 42, "Hide diverted flights"),
+    new RadioButton(1000, 110, 220, 42, "Show diverted flights"),
     new RadioButton(850, 80, 100, 100, "Map View")
    };
    
    
 
-  dataPoints = CSVToDataPoint("flights2k(1).csv", filterByCancelled, filterByDiverted);
+  dataPoints = CSVToDataPoint("flights_full (1).csv", filterByCancelled, filterByDiverted);
   filteredFlights = filterByFlight();
 
 
@@ -172,25 +198,60 @@ public ArrayList<DataPoint> filterByFlight() { //Function that filters
             && (!filterByDiverted || f.DIVERTED))
           {
             filteredFlights.add(f);
-            if (f.DEST_STATE_ABR.equals("CA")) CA++;
-            else if (f.DEST_STATE_ABR.equals("NY")) NY++;
-            else if (f.DEST_STATE_ABR.equals("FL")) FL++;
-            else if (f.DEST_STATE_ABR.equals("VA")) VA++;
-            else if (f.DEST_STATE_ABR.equals("WA")) WA++;
-            else if (f.DEST_STATE_ABR.equals("IL")) IL++;
-            else if (f.DEST_STATE_ABR.equals("TX")) TX++;
-            else if (f.DEST_STATE_ABR.equals("OR")) OR++;
-            else if (f.DEST_STATE_ABR.equals("NM")) NM++;
-            else if (f.DEST_STATE_ABR.equals("NJ")) NJ++;
+              switch (f.DEST_STATE_ABR) {
+              case "CA": CA++; break;
+              case "NY": NY++; break;
+              case "FL": FL++; break;
+              case "VA": VA++; break;
+              case "WA": WA++; break;
+              case "IL": IL++; break;
+              case "HI": HI++; break;
+              case "TX": TX++; break;
+              case "OR": OR++; break;
+              case "NM": NM++; break;
+              case "NJ": NJ++; break;
+              }
+                
+              switch (f.dateNumber) {
+              case "1": jan1++; break;
+              case "2": jan2++; break;
+              case "3": jan3++; break;
+              case "4": jan4++; break;
+              case "5": jan5++; break;
+              case "6": jan6++; break;
+              }
           }
         } else {
           if ((!filterByCancelled || f.CANCELLED) && (!filterByDiverted || f.DIVERTED))
           {
             filteredFlights.add(f);
-          }
+              switch (f.DEST_STATE_ABR) {
+              case "CA": CA++; break;
+              case "NY": NY++; break;
+              case "FL": FL++; break;
+              case "VA": VA++; break;
+              case "WA": WA++; break;
+              case "IL": IL++; break;
+              case "HI": HI++; break;
+              case "TX": TX++; break;
+              case "OR": OR++; break;
+              case "NM": NM++; break;
+              case "NJ": NJ++; break;
+              }
+                
+              switch (f.dateNumber) {
+              case "1": jan1++; break;
+              case "2": jan2++; break;
+              case "3": jan3++; break;
+              case "4": jan4++; break;
+              case "5": jan5++; break;
+              case "6": jan6++; break;
+           }
+         }
+       }        
+    }     
         }
-      }
-    } else {
+     else {
       for (int i = dataPoints.size() - 1; i >=0; i-- ) { //For loop
         DataPoint f = dataPoints.get(i);
         if (!searchBy.trim().equals("")) {
@@ -199,38 +260,63 @@ public ArrayList<DataPoint> filterByFlight() { //Function that filters
             && (!filterByDiverted || f.DIVERTED))
           {
             filteredFlights.add(f);
-            if (f.DEST_STATE_ABR.equals("CA")) CA++;
-            else if (f.DEST_STATE_ABR.equals("NY")) NY++;
-            else if (f.DEST_STATE_ABR.equals("FL")) FL++;
-            else if (f.DEST_STATE_ABR.equals("VA")) VA++;
-            else if (f.DEST_STATE_ABR.equals("WA")) WA++;
-            else if (f.DEST_STATE_ABR.equals("IL")) IL++;
-            else if (f.DEST_STATE_ABR.equals("TX")) TX++;  
-            else if (f.DEST_STATE_ABR.equals("OR")) OR++;
-            else if (f.DEST_STATE_ABR.equals("NM")) NM++;
-            else if (f.DEST_STATE_ABR.equals("NJ")) NJ++;
+              switch (f.DEST_STATE_ABR) {
+              case "CA": CA++; break;
+              case "NY": NY++; break;
+              case "FL": FL++; break;
+              case "VA": VA++; break;
+              case "WA": WA++; break;
+              case "IL": IL++; break;
+              case "HI": HI++; break;
+              case "TX": TX++; break;
+              case "OR": OR++; break;
+              case "NM": NM++; break;
+              case "NJ": NJ++; break;
+              }
+                
+              switch (f.dateNumber) {
+              case "1": jan1++; break;
+              case "2": jan2++; break;
+              case "3": jan3++; break;
+              case "4": jan4++; break;
+              case "5": jan5++; break;
+              case "6": jan6++; break;
+              }
           }
         } else {
           if ((!filterByCancelled || f.CANCELLED) && (!filterByDiverted || f.DIVERTED))
           {
             filteredFlights.add(f);
-            if (f.DEST_STATE_ABR.equals("CA")) CA++;
-            else if (f.DEST_STATE_ABR.equals("NY")) NY++;
-            else if (f.DEST_STATE_ABR.equals("FL")) FL++;
-            else if (f.DEST_STATE_ABR.equals("VA")) VA++;
-            else if (f.DEST_STATE_ABR.equals("WA")) WA++;
-            else if (f.DEST_STATE_ABR.equals("IL")) IL++;
-            else if (f.DEST_STATE_ABR.equals("TX")) TX++;  
-            else if (f.DEST_STATE_ABR.equals("OR")) OR++;
-            else if (f.DEST_STATE_ABR.equals("NM")) NM++;
-            else if (f.DEST_STATE_ABR.equals("NJ")) NJ++;
+              switch (f.DEST_STATE_ABR) {
+              case "CA": CA++; break;
+              case "NY": NY++; break;
+              case "FL": FL++; break;
+              case "VA": VA++; break;
+              case "WA": WA++; break;
+              case "IL": IL++; break;
+              case "HI": HI++; break;
+              case "TX": TX++; break;
+              case "OR": OR++; break;
+              case "NM": NM++; break;
+              case "NJ": NJ++; break;
+              }
+                
+              switch (f.dateNumber) {
+              case "1": jan1++; break;
+              case "2": jan2++; break;
+              case "3": jan3++; break;
+              case "4": jan4++; break;
+              case "5": jan5++; break;
+              case "6": jan6++; break;
+              }
           }
         }
       }
     }
 
     return filteredFlights;
-  } else {
+  }
+    else {
     if (flipList ==false) {
       for (DataPoint f : dataPoints) { //For loop
         if (!searchBy.trim().equals("")) {
@@ -239,11 +325,55 @@ public ArrayList<DataPoint> filterByFlight() { //Function that filters
             && (!filterByDiverted || f.DIVERTED))
           {
             filteredFlights.add(f);
+              switch (f.DEST_STATE_ABR) {
+              case "CA": CA++; break;
+              case "NY": NY++; break;
+              case "FL": FL++; break;
+              case "VA": VA++; break;
+              case "WA": WA++; break;
+              case "IL": IL++; break;
+              case "HI": HI++; break;
+              case "TX": TX++; break;
+              case "OR": OR++; break;
+              case "NM": NM++; break;
+              case "NJ": NJ++; break;
+              }
+                
+              switch (f.dateNumber) {
+              case "1": jan1++; break;
+              case "2": jan2++; break;
+              case "3": jan3++; break;
+              case "4": jan4++; break;
+              case "5": jan5++; break;
+              case "6": jan6++; break;
+              }
           }
         } else {
           if ((!filterByCancelled || f.CANCELLED) && (!filterByDiverted || f.DIVERTED))
           {
             filteredFlights.add(f);
+              switch (f.DEST_STATE_ABR) {
+              case "CA": CA++; break;
+              case "NY": NY++; break;
+              case "FL": FL++; break;
+              case "VA": VA++; break;
+              case "WA": WA++; break;
+              case "IL": IL++; break;
+              case "HI": HI++; break;
+              case "TX": TX++; break;
+              case "OR": OR++; break;
+              case "NM": NM++; break;
+              case "NJ": NJ++; break;
+              }
+                
+              switch (f.dateNumber) {
+              case "1": jan1++; break;
+              case "2": jan2++; break;
+              case "3": jan3++; break;
+              case "4": jan4++; break;
+              case "5": jan5++; break;
+              case "6": jan6++; break;
+              }
           }
         }
       }
@@ -256,11 +386,55 @@ public ArrayList<DataPoint> filterByFlight() { //Function that filters
             && (!filterByDiverted || f.DIVERTED))
           {
             filteredFlights.add(f);
+              switch (f.DEST_STATE_ABR) {
+              case "CA": CA++; break;
+              case "NY": NY++; break;
+              case "FL": FL++; break;
+              case "VA": VA++; break;
+              case "WA": WA++; break;
+              case "IL": IL++; break;
+              case "HI": HI++; break;
+              case "TX": TX++; break;
+              case "OR": OR++; break;
+              case "NM": NM++; break;
+              case "NJ": NJ++; break;
+              }
+                
+              switch (f.dateNumber) {
+              case "1": jan1++; break;
+              case "2": jan2++; break;
+              case "3": jan3++; break;
+              case "4": jan4++; break;
+              case "5": jan5++; break;
+              case "6": jan6++; break;
+              }
           }
         } else {
           if ((!filterByCancelled || f.CANCELLED) && (!filterByDiverted || f.DIVERTED))
           {
             filteredFlights.add(f);
+              switch (f.DEST_STATE_ABR) {
+              case "CA": CA++; break;
+              case "NY": NY++; break;
+              case "FL": FL++; break;
+              case "VA": VA++; break;
+              case "WA": WA++; break;
+              case "IL": IL++; break;
+              case "HI": HI++; break;
+              case "TX": TX++; break;
+              case "OR": OR++; break;
+              case "NM": NM++; break;
+              case "NJ": NJ++; break;
+              }
+                
+              switch (f.dateNumber) {
+              case "1": jan1++; break;
+              case "2": jan2++; break;
+              case "3": jan3++; break;
+              case "4": jan4++; break;
+              case "5": jan5++; break;
+              case "6": jan6++; break;
+              }
           }
         }
       }

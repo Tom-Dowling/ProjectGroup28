@@ -208,7 +208,6 @@ void keyPressed(){
   // bar chart
   if (key == '1') currentBarChart = 1;
   if (key == '2') currentBarChart = 2;
-  if (key == '3') currentBarChart = 3;
   }
   
   

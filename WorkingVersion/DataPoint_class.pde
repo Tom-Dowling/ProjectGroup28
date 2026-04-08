@@ -18,10 +18,11 @@ int ARR_TIME;
 Boolean CANCELLED;
 Boolean DIVERTED;
 float DISTANCE;
+String dateNumber;
   
   
 DataPoint(String FL_DATE,String MKT_CARRIER,int MKT_CARRIER_FL_NUM,String ORIGIN,String ORIGIN_CITY_NAME,String ORIGIN_STATE_ABR,int ORIGIN_WAC,String DEST,String DEST_CITY_NAME,
-String DEST_STATE_ABR,int DEST_WAC,int CRS_DEP_TIME,int DEP_TIME,int CRS_ARR_TIME,int ARR_TIME,Boolean CANCELLED,Boolean DIVERTED,float DISTANCE)
+String DEST_STATE_ABR,int DEST_WAC,int CRS_DEP_TIME,int DEP_TIME,int CRS_ARR_TIME,int ARR_TIME,Boolean CANCELLED,Boolean DIVERTED,float DISTANCE, String dateNumber)
 {
   this.FL_DATE = FL_DATE;
   this.MKT_CARRIER = MKT_CARRIER;
@@ -41,7 +42,7 @@ String DEST_STATE_ABR,int DEST_WAC,int CRS_DEP_TIME,int DEP_TIME,int CRS_ARR_TIM
   this.CANCELLED = CANCELLED;
   this.DIVERTED = DIVERTED;
   this.DISTANCE = DISTANCE;
- 
+  this.dateNumber = dateNumber;
 }
 
 DataPoint()
@@ -64,6 +65,7 @@ DataPoint()
   this.CANCELLED = true;
   this.DIVERTED = true;
   this.DISTANCE = 0;
+  this.dateNumber = null;
 }
 
 }

@@ -15,6 +15,16 @@ public ArrayList<DataPoint> CSVToDataPoint(String file, boolean hideCancelled, b
           String[] parts = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
           String FL_DATE       = parts[0];
+          String dateNumber = String.valueOf(FL_DATE.charAt(2));
+          switch (dateNumber) {
+          case "1": initialJan1++; break;
+          case "2": initialJan2++; break;
+          case "3": initialJan3++; break;
+          case "4": initialJan4++; break;
+          case "5": initialJan5++; break;
+          case "6": initialJan6++; break;
+          }
+          
           String MKT_CARRIER   = parts[1];
 
           int MKT_CARRIER_FL_NUM = parts[2].equals("") ? 0 : Integer.parseInt(parts[2]);
@@ -28,13 +38,19 @@ public ArrayList<DataPoint> CSVToDataPoint(String file, boolean hideCancelled, b
           String DEST           = parts[7];
           String DEST_CITY_NAME = parts[8];
           String DEST_STATE_ABR = parts[9];
-          if (DEST_STATE_ABR.equals("CA")) CA++;
-          else if (DEST_STATE_ABR.equals("NY")) NY++;
-          else if (DEST_STATE_ABR.equals("FL")) FL++;
-          else if (DEST_STATE_ABR.equals("VA")) VA++;
-          else if (DEST_STATE_ABR.equals("WA")) WA++;
-          else if (DEST_STATE_ABR.equals("IL")) IL++;
-          else if (DEST_STATE_ABR.equals("TX")) TX++;
+          switch (DEST_STATE_ABR) {
+              case "CA": initialCA++; break;
+              case "NY": initialNY++; break;
+              case "FL": initialFL++; break;
+              case "VA": initialVA++; break;
+              case "WA": initialWA++; break;
+              case "IL": initialIL++; break;
+              case "HI": initialHI++; break;
+              case "TX": initialTX++; break;
+              case "OR": initialOR++; break;
+              case "NM": initialNM++; break;
+              case "NJ": initialNJ++; break;
+          }
 
 
           int DEST_WAC     = parts[10].equals("") ? 0 : Integer.parseInt(parts[10]);
@@ -56,7 +72,7 @@ public ArrayList<DataPoint> CSVToDataPoint(String file, boolean hideCancelled, b
             ORIGIN, ORIGIN_CITY_NAME, ORIGIN_STATE_ABR, ORIGIN_WAC,
             DEST, DEST_CITY_NAME, DEST_STATE_ABR, DEST_WAC,
             CRS_DEP_TIME, DEP_TIME, CRS_ARR_TIME, ARR_TIME,
-            CANCELLED, DIVERTED, DISTANCE
+            CANCELLED, DIVERTED, DISTANCE, dateNumber
             ));
         }
         catch (Exception e) {

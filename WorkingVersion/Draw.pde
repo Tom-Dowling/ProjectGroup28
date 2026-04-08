@@ -28,25 +28,24 @@ if (benUI.screenState == 1) {
 
 void drawBarChart() {
     String[] ArrivalStates = { "New York", "California", "Washington", "Virginia", "Texas", "Illinois", "Florida", "Hawaii", "Oregon", "New Mexico", "New Jersey"};
-    float[]  arrivalCounts = { NY, CA, WA, VA, TX, IL, FL, HI, OR, NM, NJ};
+    float[]  initialArrivalCounts = { initialNY, initialCA, initialWA, initialVA, initialTX, initialIL, initialFL, initialHI, initialOR, initialNM, initialNJ};
+    float[]  filteredArrivalCounts = { NY, CA, WA, VA, TX, IL, FL, HI, OR, NM, NJ};
 
-    String[] departureDates    = { "Mar 20", "Mar 21", "Mar 22", "Mar 23", "Mar 24", "Mar 25", "Mar 26" };
-    float[]  departureCounts   = { 40, 36, 52, 58, 45, 50, 47 };
 
-    String[] airportCodes      = { "JFK", "LHR", "DUB", "CDG", "AMS", "FRA", "MAD" };
-    float[]  flightsPerAirport = { 320, 410, 180, 390, 290, 350, 220 };
+    String[] departureDates    = { "Jan 1", "Jan 2", "Jan 3", "Jan 4", "Jan 5", "Jan 6"};
+    float[]  initialDateCounts   = { initialJan1, initialJan2, initialJan3, initialJan4, initialJan5, initialJan6};
+    float[]  filteredDateCounts   = { jan1, jan2, jan3, jan4, jan5, jan6};
     
     background(255);
     returnFromBarChart.display();
     
     if (currentBarChart == 1) {
-      drawBarChart(arrivalCounts, ArrivalStates, "Daily Arrivals", color(52, 120, 200));
+      if (!filterSelected) drawBarChart(initialArrivalCounts, ArrivalStates, "Flights per Destination", color(52, 120, 200));
+      else drawBarChart(filteredArrivalCounts, ArrivalStates, "Flights per destination", color(52, 120, 200));
     } 
     else if (currentBarChart == 2) {
-      drawBarChart(departureCounts, departureDates, "Daily Departures", color(40, 170, 120));
-    }
-    else {
-      drawBarChart(flightsPerAirport, airportCodes, "Total Flights by Airport", color(200, 90, 60));
+      if (!filterSelected) drawBarChart(initialDateCounts, departureDates, "Flights per date of departure", color(40, 170, 120));
+      else drawBarChart(filteredDateCounts, departureDates, "Flights per date of departure", color(40, 170, 120));
     }
 
   // Keyboard hint at the bottom
@@ -54,9 +53,8 @@ void drawBarChart() {
     textSize(11);
     textAlign(CENTER, BOTTOM);
     noStroke();
-    text("Press 1 = Arrivals   |   2 = Departures   |   3 = By Airport", width / 2, height - 6);
+    text("Press 1 = Destination  |   2 = Date", width / 2, height - 6);
 }
-
 
 void drawHome() {
   
