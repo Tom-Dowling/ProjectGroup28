@@ -1,5 +1,7 @@
 class MapButton {
+  //Tracks whethere map button is selected or not
   boolean filterSelected;
+
   float x, y, r;
   color baseColour = color(200);
   color hoverColour = color(180);
@@ -62,7 +64,7 @@ void drawMapMode() {
 
 
 
-
+// Maps each MapButton to a state code
 String[] mapAirports = {
   "WA", // Washington
   "OR", // Oregon
