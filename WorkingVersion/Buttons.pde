@@ -85,7 +85,7 @@ void drawArrows() {
 }
 
 void mousePressed() {
-  if (screenState.equals(HOME)) {     //if we aren't on the main screen, the buttons won't be clickable
+  if (screenState.equals(HOME)) {     // if we user isn't on the main screen, the buttons won't be clickable
     // Arrows
     if (mouseX > 80 && mouseX < 120 && mouseY > height-55 && mouseY < height-5) {
       currentPage = max(0, currentPage - 1);
