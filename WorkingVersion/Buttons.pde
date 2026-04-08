@@ -16,7 +16,7 @@ class RadioButton {
     this.filterSelected = false;
   }  
   
-  void display() {           // drawing button body
+  void display() {           // drawing button body - different appearance whether button has been clicked, hovered over, or neither
     if (filterSelected) {
       fill(activeColour);
     } else if (isInside()) {
@@ -26,11 +26,11 @@ class RadioButton {
     }
     
     stroke(80);
-    strokeWeight(filterSelected ? 2.5 : 1);
+    strokeWeight(filterSelected ? 2.5 : 1);    // different stroke weight whether a button has been clicked or not
     rect(x, y, w, h, 8);
     
 
-    if (filterSelected) textColour = 255;
+    if (filterSelected) textColour = 255;    // different text colour whether a button has been clicked or not
     else textColour = 50;
     fill(textColour);
     noStroke();
@@ -85,7 +85,7 @@ void drawArrows() {
 }
 
 void mousePressed() {
-  if (screenState.equals(HOME)) { //if we aren't on the main screen, the buttons won't be clickable
+  if (screenState.equals(HOME)) {     //if we aren't on the main screen, the buttons won't be clickable
     // Arrows
     if (mouseX > 80 && mouseX < 120 && mouseY > height-55 && mouseY < height-5) {
       currentPage = max(0, currentPage - 1);
