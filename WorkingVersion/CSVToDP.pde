@@ -10,7 +10,7 @@ public ArrayList<DataPoint> CSVToDataPoint(String file, boolean hideCancelled, b
     reader = new BufferedReader(new FileReader(sketchPath(file))); //using a BufferedReader stores a large chunk of the file data at a time whch the reader then searches instead of the file itself, this improves processing speed
 
     while ((line = reader.readLine()) != null) { //Goes through eaach line of file until it meets a null line, saves the current line as a string to the 'line variable'
-      if (count > 0) { this skips the 0th line of the file which does not have data but is simply the headings of the collumns, also allows the programme to report the number of the iteration if it runs into an error
+      if (count > 0) { //this skips the 0th line of the file which does not have data but is simply the headings of the collumns, also allows the programme to report the number of the iteration if it runs into an error
         try {
           String[] parts = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"); //splits the current string into an array of smaller strings by seperating them by the appearance of a comma(it is a comma seperated values file)
                                                                             //However, (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$) makes sure that if a comma appears inbetween quotation marks(which all the values are) then don't count it
