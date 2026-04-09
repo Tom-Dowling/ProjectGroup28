@@ -1,6 +1,6 @@
 class UIHandler {
 int screenState = 0; // 0 is Home, 1 is Data Table
-PImage planeOne;
+PImage planeOne;    // plane image for transition
 PImage planeTwo;
 PImage planeThree;
 PImage logo;
@@ -9,16 +9,16 @@ int lastTime;
 
 
 UIHandler() { 
-planeTwo = loadImage("PlaneTwo.png");
-logo = loadImage("logoflight.GIF");
-showText = true;
-lastTime = 0;
+planeTwo = loadImage("PlaneTwo.png");  // load in plane image
+logo = loadImage("logoflight.GIF");    // load in logo image
+showText = true;        // "press enter text"
+lastTime = 0;          // timer for flashing text
 }
 
 void draw() {
-if (screenState == 0) {
+if (screenState == 0) {        // if screen state is home, draw home screen
 drawHomeScreen();
-} else if (screenState == 1) {
+} else if (screenState == 1) {    // if screen state is data, draw data screen
 drawDataScreen();
 }
 }
@@ -30,16 +30,16 @@ fill(150);
 image(logo, 250, 150, 900,300);
 
 
-if (millis() - lastTime >= 750)
+if (millis() - lastTime >= 750)        // if time-the last time is bigger than 750 ms
 {
-  showText = !showText;
-  lastTime = millis();
+  showText = !showText;        // change show text boolean
+  lastTime = millis();        // update last time
 }
 if (showText)
 {
 textSize(40);
 fill(255, 255, 255);
-text("Press ENTER to begin", width/2, height/2 + 120);
+text("Press ENTER to begin", width/2, height/2 + 120);     
 }
 }
 
