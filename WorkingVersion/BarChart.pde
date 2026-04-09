@@ -43,8 +43,8 @@ void drawBarChart(float[] values, String[] labels, String title, color barColor)
   float barW    = slotW * 0.6;                      // bar takes up 60% of the slot
   float padding = slotW * 0.2;                      // gap on each side of the bar
 
-  for (int i = 0; i < values.length; i++) {
-    float barH = map(values[i], 0, maxVal, 0, chartH);
+  for (int i = 0; i < values.length; i++) {       // iterations for each bar of the chart
+    float barH = map(values[i], 0, maxVal, 0, chartH);  // sets positions of x and y axes of the bars
     float x    = left + i * slotW + padding;
     float y    = bottom - barH;
 
