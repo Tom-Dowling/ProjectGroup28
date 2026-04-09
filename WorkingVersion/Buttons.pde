@@ -54,7 +54,7 @@ class RadioButton {
   }
   
   
-    boolean handleScreenChangeClick() {      // will be called in mousePressed() in main sketch
+    boolean handleScreenChangeClick() {      // used for buttons which don't change a filter but just change screen
     if (isInside()) {
       if(screenState.equals(BARCHART)) screenState = HOME;
       else if (screenState.equals(MAP)) screenState = HOME;
@@ -72,8 +72,8 @@ class RadioButton {
 
 void drawArrows() {
   int maxPage;
-  if (filterSelected) maxPage = filteredFlights.size()/10;
-  else maxPage = dataPoints.size()/10;  
+  if (filterSelected) maxPage = filteredFlights.size()/10;    //checks the size of the length of the list of the flights which matches the search terms and determines the amount of pages they need to be dsiplayed over
+  else maxPage = dataPoints.size()/10;                        // this number is then used to make sure the programme knows when to stop allowing the next page arrow to be clickable, stopping the for loop which fetches the flights from going out of bounds
     
   // Left arrow (greyed out on first page)
   fill(currentPage > 0 ? color(70, 130, 255) : color(60));
@@ -137,23 +137,31 @@ void mousePressed() {
   if (screenState.equals(HOME)) departure.handleClick();
 
   if (search.active) {
-    NY = 0.0;
-    CA = 0.0;
-    FL = 0.0;
-    VA = 0.0;
-    WA = 0.0;
-    IL = 0.0;
-    TX = 0.0;
-    HI = 0.0;
-    OR = 0.0;
-    NJ = 0.0;
-    NM = 0.0;
     searchBy = departure.getText();
     println("SEARCH CLICKED! Departure = " + searchBy);
 
 
     departure.typedText = "";
   }
+
+  NY = 0.0;    //Resets counts for bar chart, so that when filters are updated the previous data is deletd before the counting again with new filters 
+  CA = 0.0;
+  FL = 0.0;
+  VA = 0.0;
+  WA = 0.0;
+  IL = 0.0;
+  TX = 0.0;
+  HI = 0.0;
+  OR = 0.0;
+  NJ = 0.0;
+  NM = 0.0;
+  jan1 = 0.0;
+  jan2 = 0.0;
+  jan3= 0.0;
+  jan4 = 0.0;
+  jan5 = 0.0;
+  jan6 = 0.0;
+
   filterSelected = (filterByCancelled || filterByDiverted || !searchBy.isEmpty() || flipList ||  searchByState);
   filteredFlights = filterByFlight();
 
