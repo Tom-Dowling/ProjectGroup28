@@ -75,13 +75,13 @@ void drawArrows() {
   if (filterSelected) maxPage = filteredFlights.size()/10;    //checks the size of the length of the list of the flights which matches the search terms and determines the amount of pages they need to be dsiplayed over
   else maxPage = dataPoints.size()/10;                        // this number is then used to make sure the programme knows when to stop allowing the next page arrow to be clickable, stopping the for loop which fetches the flights from going out of bounds
     
-  // Left arrow (greyed out on first page)
-  fill(currentPage > 0 ? color(70, 130, 255) : color(60));
-  triangle(80, height-30, 120, height-55, 120, height-5);
+  // Left arrow 
+  fill(currentPage > 0 ? color(70, 130, 255) : color(60)); // if it's on the first page, the arrow is greyed out
+  triangle(80, height-30, 120, height-55, 120, height-5);  // draw left arrow
 
   // Right arrow
-  fill(currentPage+1 <= maxPage ? color(70, 130, 255) : color(60));
-  triangle(width-80, height-30, width-120, height-55, width-120, height-5);
+  fill(currentPage+1 <= maxPage ? color(70, 130, 255) : color(60));  // same if it's on the last page of info
+  triangle(width-80, height-30, width-120, height-55, width-120, height-5); // draw right arrow
 }
 
 void mousePressed() {
