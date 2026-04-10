@@ -13,7 +13,7 @@ public ArrayList<DataPoint> CSVToDataPoint(String file, boolean hideCancelled, b
       if (count > 0) { //this skips the 0th line of the file which does not have data but is simply the headings of the collumns, also allows the programme to report the number of the iteration if it runs into an error
         try {
           String[] parts = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"); //splits the current string into an array of smaller strings by seperating them by the appearance of a comma(it is a comma seperated values file)
-                                                                            //However, (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$) makes sure that if a comma appears inbetween quotation marks(which all the values are) then don't count it
+                                                                            //However, (?=(?:[^\"]*\"[^\"]*\")*[^\"]*$) makes sure that if a comma appears inbetween quotation marks(which the problem values are) then don't count it
                                                                             //This prevents values which contain a comma(such as "New York, NY" to not be seperate themselves, which would cause errors.
                                                                             //This is done by the programme checking the amount of quations marks in the remainder of the string, if odd(i.e. we are inside of a value, then don't seperate by comma).
 
